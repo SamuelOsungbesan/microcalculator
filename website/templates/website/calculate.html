@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        background-color: #0f172a; /* deep navy background */
+        color: #f8fafc; /* off-white text */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding-top: 2rem;
+    }
+
+    .form-card {
+        background-color: #1e293b; /* card background */
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .form-card h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #60a5fa; /* blue-400 */
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.75rem;
+    }
+
+    .form-label {
+        color: #facc15; /* yellow */
+        margin-bottom: 0.3rem;
+    }
+
+    .form-control {
+        background-color: #0f172a;
+        color: #f8fafc;
+        border: 1px solid #334155;
+        border-radius: 8px;
+    }
+
+    .form-control:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+        background-color: #1e293b;
+        color: #fff;
+    }
+
+    .form-text {
+        color: #94a3b8; /* slate-400 */
+        font-size: 0.875rem;
+    }
+
+    .btn-submit {
+        background-color: #3b82f6;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: bold;
+        color: white;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+
+    .btn-submit:hover {
+        background-color: #2563eb;
+    }
+</style>
+
+<div class="form-card">
+    <h2>Calculate Specimen Size</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.name.id_for_label }}" class="form-label">Specimen Name</label>
+            {{ form.name }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.magnified_size.id_for_label }}" class="form-label">Magnified Size (units)</label>
+            {{ form.size }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.magnification_factor.id_for_label }}" class="form-label">Magnification Factor</label>
+            {{ form.mag_factor }}
+            <div class="form-text">The magnification level of your microscope (e.g., 100x)</div>
+        </div>
+        <button type="submit" class="btn-submit">🔍 Calculate & Save</button>
+    </form>
+</div>
+{% endblock content %}

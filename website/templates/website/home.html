@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        background-color: #0f172a;
+        color: #f1f5f9;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .dashboard-card {
+        background-color: #1e293b;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        margin-top: 2rem;
+    }
+
+    .dashboard-card h2 {
+        color: #38bdf8;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5rem;
+    }
+
+    .table-dark th,
+    .table-dark td {
+        color: #e2e8f0;
+        vertical-align: middle;
+    }
+
+    .table-dark th {
+        background-color: #334155;
+    }
+
+    .table-dark tbody tr {
+        background-color: #1e293b;
+        border-bottom: 1px solid #334155;
+        transition: background 0.3s ease;
+    }
+
+    .table-dark tbody tr:hover {
+        background-color: #475569;
+    }
+
+    .btn-info {
+        background-color: #0ea5e9;
+        border: none;
+    }
+
+    .btn-info:hover {
+        background-color: #0284c7;
+    }
+
+    .btn-primary {
+        background-color: #10b981;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #059669;
+    }
+
+    .no-specimen {
+        text-align: center;
+        padding: 2rem;
+        color: #94a3b8;
+    }
+</style>
+
+<div class="dashboard-card">
+    <h2>Saved Specimens</h2>
+    {% if specimens %}
+        <div class="table-responsive">
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Magnified Size</th>
+                        <th>Magnification Factor</th>
+                        <th>Actual Size</th>
+                        <th>Date Added</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for specimen in specimens %}
+                        <tr>
+                            <td>{{ specimen.name }}</td>
+                            <td>{{ specimen.size }}</td>
+                            <td>{{ specimen.mag_factor }}</td>
+                            <td>{{ specimen.actual_size|floatformat:6 }} units</td>
+                            <td>{{ specimen.date_added|date:"F d, Y H:i" }}</td>
+                            <td>
+                                <a href="{% url 'detail' specimen.id %}" class="btn btn-sm btn-info">🔍 View</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="no-specimen">
+            <p>🔬 No specimens have been added yet.</p>
+            <a href="{% url 'calculate' %}" class="btn btn-primary mt-3">➕ Add a Specimen</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}
