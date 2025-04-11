@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Saved Specimens</h2>
+        </div>
+        <div class="card-body">
+            {% if specimens %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Magnified Size</th>
+                                <th>Magnification Factor</th>
+                                <th>Actual Size</th>
+                                <th>Date Added</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for specimen in specimens %}
+                                <tr>
+                                    <td>{{ specimen.name }}</td>
+                                    <td>{{ specimen.magnified_size }}</td>
+                                    <td>{{ specimen.magnification_factor }}</td>
+                                    <td>{{ specimen.actual_size|floatformat:6 }} units</td>
+                                    <td>{{ specimen.date_added|date:"F d, Y H:i" }}</td>
+                                    <td>
+                                        <a href="{% url 'calculator-detail' specimen.id %}" class="btn btn-sm btn-info">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-center">No specimens have been added yet.</p>
+                <div class="text-center">
+                    <a href="{% url 'calculator-calculate' %}" class="btn btn-primary">Add a Specimen</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
